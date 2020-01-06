@@ -8,7 +8,7 @@
 #include "my.h"
 #include <unistd.h>
 
-int my_putstr_error(char *str)
+int my_putstr_error(const char *str)
 {
     write(2, str, my_strlen(str));
     return EXIT_ERROR;

@@ -7,11 +7,21 @@
 
 DSRC	=	./src/
 
-SRC	=	$(DSRC)main.c		\
+SRC	=	$(DSRC)main.c			\
+		$(DSRC)constant_macro.c	\
+		$(DSRC)browse_folders.c	\
+		$(DSRC)browse_folder.c	\
+		$(DSRC)display_file.c	\
+		$(DSRC)get_argument.c	\
+		$(DSRC)config_destroy.c	\
+		$(DSRC)get_files.c		\
+		$(DSRC)sort_files.c		\
+		$(DSRC)sort_path.c		\
+		$(DSRC)tools.c		\
 
 OBJ	=	$(SRC:.c=.o)
 
-NAME	=	EXEC
+NAME	=	my_ls
 
 CFLAGS	+= -Wall -Wextra -I./include
 
