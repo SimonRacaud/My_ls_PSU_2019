@@ -11,7 +11,11 @@ SRC	=	$(DSRC)main.c			\
 		$(DSRC)constant_macro.c	\
 		$(DSRC)browse_folders.c	\
 		$(DSRC)browse_folder.c	\
-		$(DSRC)display_file.c	\
+		$(DSRC)display/display_file_data.c	\
+		$(DSRC)display/display_file_data_type_right.c	\
+		$(DSRC)display/display_file_data_owner.c	\
+		$(DSRC)display/display_file_data_size.c	\
+		$(DSRC)display/display_file_data_time.c	\
 		$(DSRC)get_argument.c	\
 		$(DSRC)config_destroy.c	\
 		$(DSRC)get_files.c		\

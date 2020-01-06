@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <pwd.h>
 #include <dirent.h>
 #include "my.h"
 
@@ -29,7 +30,9 @@ typedef struct config {
 
 typedef struct file {
     char *name;
+    char *symlink;
     mode_t mode;
+    char type;
     nlink_t link;
     ino_t inode;
     uid_t uid;
@@ -38,17 +41,20 @@ typedef struct file {
     time_t last_mod;
     unsigned int minor;
     unsigned int major;
-    struct file *next;
 } file_t;
 
-int browse_folders(config_t *config);
+int my_ls(int argc, char **argv);
+
+int starting_browse(config_t *config);
 int browse_folder(config_t *config, const char *folder);
 
-int display_files_data(file_t *file);
+int display_files_data(file_t *file, int size, config_t *config);
+void display_type_and_right(file_t *file);
+void display_owner(uid_t uid, gid_t gid);
+void display_size(file_t *file);
+void dipslay_lastmod_time(file_t *file);
 
-void sort_path(config_t *config);
-
-int get_files_data(config_t *config);
+int get_files_data(char **path, file_t *files, int size, config_t *config);
 int get_files_name(config_t *config, DIR *dir);
 
 int search_char_in_str(const char *str, char c);

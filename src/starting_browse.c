@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** PSU_my_ls_2019
 ** File description:
-** Browse folder
+** Start browsing (folder get in arg of the program)
 */
 
 #include "my_ls.h"
@@ -20,26 +20,30 @@ static int test_opendir(config_t *config, int folder_idx)
     }
     if (closedir(dir) == -1) {
         my_putstr_error("ERROR : close dir\n");
-        return EXIT_ERROR;
     }
     return EXIT_SUCCESS;
 }
 
-int browse_folders(config_t *config)
+int starting_browse(config_t *config)
 {
-    sort_path(config);
+    file_t *files = NULL;
+
     for (unsigned int i = 0; i < config->nb_path; i++) {
-        test_opendir(config, i);
+        if (test_opendir(config, i))
+            config->path[i] = NULL;
     }
-    for (unsigned int i = 0; i < config->nb_path; i++) {
-        if (config->path[i] == NULL) {
-            continue;
-        }
-        if (config->directory_mode) {
-            my_putstr(config->path[i]);
-            my_putchar('\n');
-        } else if (browse_folder(config, config->path[i]))
+    if (config->directory_mode) {
+        if (get_files_data(config->path, files, config->nb_path, config))
             return EXIT_ERROR;
+        // Sort files
+        display_files_data(files, config->nb_path, &config); // Display files data
+    } else {
+        for (int i = 0; i < config->nb_path; i++) {
+            if (config->path[i] == NULL)
+                continue;
+            else if (browse_folder(config->path[i], config))
+                return EXIT_ERROR;
+        }
     }
     return EXIT_SUCCESS;
 }
