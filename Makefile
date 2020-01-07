@@ -7,21 +7,21 @@
 
 DSRC	=	./src/
 
-SRC	=	$(DSRC)main.c			\
-		$(DSRC)constant_macro.c	\
-		$(DSRC)browse_folders.c	\
-		$(DSRC)browse_folder.c	\
+SRC	=	$(DSRC)main.c				\
+		$(DSRC)my_ls.c				\
+		$(DSRC)constant_macro.c		\
+		$(DSRC)starting_browse.c	\
+		$(DSRC)get_argument.c		\
+		$(DSRC)config_destroy.c		\
+		$(DSRC)tools.c				\
+		#$(DSRC)browse_folder.c	\
 		$(DSRC)display/display_file_data.c	\
 		$(DSRC)display/display_file_data_type_right.c	\
 		$(DSRC)display/display_file_data_owner.c	\
 		$(DSRC)display/display_file_data_size.c	\
 		$(DSRC)display/display_file_data_time.c	\
-		$(DSRC)get_argument.c	\
-		$(DSRC)config_destroy.c	\
 		$(DSRC)get_files.c		\
-		$(DSRC)sort_files.c		\
-		$(DSRC)sort_path.c		\
-		$(DSRC)tools.c		\
+		$(DSRC)sort_files.c
 
 OBJ	=	$(SRC:.c=.o)
 

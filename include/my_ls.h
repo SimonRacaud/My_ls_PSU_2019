@@ -12,11 +12,23 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
 #include <pwd.h>
 #include <dirent.h>
 #include "my.h"
 
 #define EXIT_ERROR 84
+
+typedef struct files_name {
+    file_name_t *next;
+    file_name_t *last;
+    unsigned int size;
+} files_name_t;
+
+typedef struct file_name {
+    file_name_t *next;
+    char *path;
+} file_name_t;
 
 typedef struct config {
     char sort_mod_time_mode;
@@ -25,7 +37,7 @@ typedef struct config {
     char directory_mode;
     char recusif_mode;
     unsigned int nb_path;
-    char **path;
+    file_name_t path;
 } config_t;
 
 typedef struct file {
@@ -43,10 +55,14 @@ typedef struct file {
     unsigned int major;
 } file_t;
 
+void debug_display_config(config_t *config); // DEBUG
+
 int my_ls(int argc, char **argv);
 
 int starting_browse(config_t *config);
 int browse_folder(config_t *config, const char *folder);
+
+int sort_files(file_t *files, int size, config_t *config);
 
 int display_files_data(file_t *file, int size, config_t *config);
 void display_type_and_right(file_t *file);

@@ -7,7 +7,7 @@
 
 #include "my_ls.h"
 
-int browse_folder(const char *path, config_t *config)
+int browse_folder(const char *pathdir, config_t *config)
 {
     DIR *dir = opendir(folder);
 

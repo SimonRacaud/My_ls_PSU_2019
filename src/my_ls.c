@@ -9,15 +9,16 @@
 
 void debug_display_config(config_t *config)
 {
-    my_printf("List Mode %d \n", config->list_mode);
-    my_printf("Recursif Mode %d \n", config->recusif_mode);
-    my_printf("Dir Mode %d \n", config->directory_mode);
-    my_printf("Sort rev Mode %d \n", config->sort_reverse_mode);
-    my_printf("Sort modif time Mode %d \n", config->sort_mod_time_mode);
-    my_printf("\nNB PATH: %d \n", config->nb_path);
+    my_putstr("--------------------\n");
+    my_printf("\tList Mode [%d] \n", config->list_mode);
+    my_printf("\tRecursif Mode [%d] \n", config->recusif_mode);
+    my_printf("\tDir Mode [%d] \n", config->directory_mode);
+    my_printf("\tSort rev Mode [%d] \n", config->sort_reverse_mode);
+    my_printf("\tSort modif time Mode [%d] \n", config->sort_mod_time_mode);
+    my_printf("\n\tNB PATH: [%d] \n", config->nb_path);
     for (unsigned int i = 0; i < config->nb_path; i++)
-        my_printf("Path: %s \n", config->path[i]);
-    my_putstr("\n");
+        my_printf("\tPath: {%s} \n", config->path[i]);
+    my_putstr("--------------------\n");
 }
 
 int my_ls(int argc, char **argv)

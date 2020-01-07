@@ -6,3 +6,9 @@
 */
 
 #include "my_ls.h"
+
+int sort_files(file_t *files, int size, config_t *config)
+{
+
+    return EXIT_SUCCESS;
+}

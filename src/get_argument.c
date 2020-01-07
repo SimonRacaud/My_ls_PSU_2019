@@ -56,7 +56,9 @@ static void init_config(config_t *config)
     config->sort_reverse_mode = 0;
     config->sort_mod_time_mode = 0;
     config->nb_path = 0;
-    config->path = NULL;
+    config->path.next = NULL;
+    config->path.last = NULL;
+    config->path.size = 0;
 }
 
 static int add_path(config_t *config, char *arg, int size)
