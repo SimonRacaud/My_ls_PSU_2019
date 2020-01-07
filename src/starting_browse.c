@@ -7,15 +7,15 @@
 
 #include "my_ls.h"
 
-static int test_opendir(config_t *config, int folder_idx)
+static int test_opendir(file_node_t *file_node)
 {
-    DIR *dir = opendir(config->path[folder_idx]);
+    DIR *dir = opendir(file_node->path);
 
     if (!dir && errno != ENOTDIR) {
         my_putstr_error("ls: cannot access '");
-        my_putstr_error(config->path[folder_idx]);
+        my_putstr_error(file_node->path);
         my_putstr_error("': No such file or directory\n");
-        config->path[folder_idx] = NULL;
+        file_node->path = NULL;
         return EXIT_ERROR;
     }
     if (errno != ENOTDIR && closedir(dir) == -1) {
@@ -26,40 +26,34 @@ static int test_opendir(config_t *config, int folder_idx)
 
 static void remove_nonexistant_files(config_t *config)
 {
-    int idx = 0;
-
-    for (unsigned int i = 0; i < config->nb_path; i++) {
-        if (test_opendir(config, i))
-            config->path[i] = NULL;
+    for (file_node_t *n = config->path_list.next; n != NULL; n = n->next) {
+        if (test_opendir(n) == EXIT_ERROR) {
+            n->path = NULL;
+        }
     }
-    for (unsigned int i = 0; i < config->nb_path; i++) {
-        if (config->path[idx] == NULL && config->path[i] != NULL) {
-            config->path[idx] = config->path[i];
-            config->path[i] = NULL;
-            idx++;
-        } else if (config->path[i] != NULL)
-            idx++;
+    if (count_notempty_node(&config->path_list) == 0) {
+        filelist_push(&config->path_list, ".");
     }
-    config->nb_path = idx;
 }
 
 int starting_browse(config_t *config)
 {
     file_t *files = NULL;
+    file_node_t *node = config->path_list.next;
 
     remove_nonexistant_files(config);
     if (config->directory_mode) {
-        if (get_files_data(config->path, files, config->nb_path, config))
+        if (get_files_data(&config->path_list, &files, config))
             return EXIT_ERROR;
         // Sort files
-        display_files_data(files, config->nb_path, &config); // Display files data
+        display_files_data(files, config->path_list.size, config); // Display files data
     } else {
-        for (int i = 0; i < config->nb_path; i++) {
-            if (config->path[i] == NULL)
+        /*for (file_node_t *n = node; n != NULL; n = n->next) {
+            if (n->path == NULL)
                 continue;
-            else if (browse_folder(config->path[i], config))
+            else if (browse_folder(config, n->path))
                 return EXIT_ERROR;
-        }
+        }*/
     }
     return EXIT_SUCCESS;
 }

@@ -9,6 +9,5 @@
 
 void destroy_config(config_t *config)
 {
-    if (config->path != NULL)
-        free(config->path);
+    filelist_destroy(&config->path_list, 0);
 }

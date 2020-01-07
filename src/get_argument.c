@@ -55,22 +55,9 @@ static void init_config(config_t *config)
     config->directory_mode = 0;
     config->sort_reverse_mode = 0;
     config->sort_mod_time_mode = 0;
-    config->nb_path = 0;
-    config->path.next = NULL;
-    config->path.last = NULL;
-    config->path.size = 0;
-}
-
-static int add_path(config_t *config, char *arg, int size)
-{
-    if (config->path == NULL) {
-        config->path = malloc(sizeof(char *) * size);
-        if (!config->path)
-            return EXIT_ERROR;
-    }
-    config->path[config->nb_path] = arg;
-    config->nb_path++;
-    return EXIT_SUCCESS;
+    config->path_list.next = NULL;
+    config->path_list.last = NULL;
+    config->path_list.size = 0;
 }
 
 int get_argument(config_t *config, int argc, char **argv)
@@ -82,12 +69,11 @@ int get_argument(config_t *config, int argc, char **argv)
         ret = eval_option(argv[i], config);
         if (ret == EXIT_ERROR)
             return EXIT_ERROR;
-        else if (ret == -1 && add_path(config, argv[i], (argc - i))) {
-            my_putstr_error("ERROR: malloc in add_path()\n");
+        else if (ret == -1 && filelist_push(&config->path_list, argv[i])) {
             return EXIT_ERROR;
         }
     }
-    if (config->nb_path == 0)
-        add_path(config, ".", 1);
+    if (config->path_list.size == 0)
+        filelist_push(&config->path_list, ".");
     return EXIT_SUCCESS;
 }

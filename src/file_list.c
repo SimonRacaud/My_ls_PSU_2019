@@ -9,7 +9,7 @@
 
 int filelist_push(files_name_t *list, char *path)
 {
-    file_name_t *new_path = malloc(sizeof(file_name_t));
+    file_node_t *new_path = malloc(sizeof(file_node_t));
 
     if (!new_path) {
         my_putstr_error("ERROR: malloc (in filelist_push)\n");
@@ -17,31 +17,38 @@ int filelist_push(files_name_t *list, char *path)
     }
     new_path->next = NULL;
     new_path->path = path;
-    list->last->next = new_path;
+    if (list->last != NULL)
+        list->last->next = new_path;
+    else
+        list->next = new_path;
     list->last = new_path;
+    list->size++;
     return EXIT_SUCCESS;
 }
 
-static void filelist_remove_node(file_name_t *node)
+static void filelist_destroy_nodes(file_node_t *node, int free_path)
 {
     if (node == NULL)
         return;
-    free(node->path);
+    if (free_path)
+        free(node->path);
     if (node->next != NULL) {
-        filelist_remove_node(node->next);
+        filelist_destroy_nodes(node->next, free_path);
     }
     free(node);
 }
 
-int filelist_destroy(files_name_t *list)
+int filelist_destroy(files_name_t *list, int free_path)
 {
     if (list != NULL && list->next != NULL)
-        filelist_remove_node(list->next);
+        filelist_destroy_nodes(list->next, free_path);
+    list->size = 0;
+    return EXIT_SUCCESS;
 }
 
 char *filelist_getnext_path(files_name_t *list)
 {
-    static file_name_t *node = NULL;
+    static file_node_t *node = NULL;
 
     if (node == NULL) {
         node = list->next;
@@ -53,4 +60,15 @@ char *filelist_getnext_path(files_name_t *list)
     } else {
         return node->path;
     }
+}
+
+int count_notempty_node(files_name_t *list)
+{
+    int count = 0;
+
+    for (file_node_t *n = list->next; n != NULL; n = n->next) {
+        if (n->path != NULL)
+            count++;
+    }
+    return count;
 }

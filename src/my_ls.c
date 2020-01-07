@@ -9,15 +9,20 @@
 
 void debug_display_config(config_t *config)
 {
+    file_node_t *node = config->path_list.next;
+
     my_putstr("--------------------\n");
     my_printf("\tList Mode [%d] \n", config->list_mode);
     my_printf("\tRecursif Mode [%d] \n", config->recusif_mode);
     my_printf("\tDir Mode [%d] \n", config->directory_mode);
     my_printf("\tSort rev Mode [%d] \n", config->sort_reverse_mode);
     my_printf("\tSort modif time Mode [%d] \n", config->sort_mod_time_mode);
-    my_printf("\n\tNB PATH: [%d] \n", config->nb_path);
-    for (unsigned int i = 0; i < config->nb_path; i++)
-        my_printf("\tPath: {%s} \n", config->path[i]);
+    my_printf("\n\tNB PATH: [%d] \n", count_notempty_node(&config->path_list));
+    while (node != NULL) {
+        if (node->path != NULL)
+            my_printf("\tPath: {%s} \n", node->path);
+        node = node->next;
+    }
     my_putstr("--------------------\n");
 }
 
