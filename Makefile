@@ -9,18 +9,20 @@ DSRC	=	./src/
 
 SRC	=	$(DSRC)main.c				\
 		$(DSRC)my_ls.c				\
-		$(DSRC)constant_macro.c		\
+		$(DSRC)constant.c		\
 		$(DSRC)starting_browse.c	\
 		$(DSRC)get_argument.c		\
-		$(DSRC)config_destroy.c		\
+		$(DSRC)destroy_struct.c		\
 		$(DSRC)tools.c				\
+		$(DSRC)get_file_type.c		\
+		$(DSRC)file_list.c			\
+		$(DSRC)get_files_data.c		\
 		#$(DSRC)browse_folder.c	\
 		$(DSRC)display/display_file_data.c	\
 		$(DSRC)display/display_file_data_type_right.c	\
 		$(DSRC)display/display_file_data_owner.c	\
 		$(DSRC)display/display_file_data_size.c	\
 		$(DSRC)display/display_file_data_time.c	\
-		$(DSRC)get_files.c		\
 		$(DSRC)sort_files.c
 
 OBJ	=	$(SRC:.c=.o)

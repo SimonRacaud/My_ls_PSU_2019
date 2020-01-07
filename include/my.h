@@ -35,10 +35,10 @@ int my_str_isnum(char const *str);
 int my_str_islower(char const *str);
 int my_str_isupper(char const *str);
 int my_str_isprintable(char const *str);
+char *my_strdup(char const *str);
 int my_showstr(char const *str);
 char *my_strcat(char *dest, char *src);
 char *my_strncat(char *dest, char const *src, int nb);
-char *my_strdup(char const *str);
 char **my_str_to_word_array(char const *str);
 int my_show_word_array(char * const *tab);
 

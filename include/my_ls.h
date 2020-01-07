@@ -9,6 +9,7 @@
 #define H_MYLS
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -18,6 +19,14 @@
 #include "my.h"
 
 #define EXIT_ERROR 84
+
+#define DEVICE_MAJOR(st_rdev) ((st_rdev >> 8) & 0xfff) \
+| ((unsigned int) (st_rdev >> 32) & ~0xfff)
+
+#define DEVICE_MINOR(st_rdev) (st_rdev & 0xff) \
+| ((unsigned int) (st_rdev >> 12) & ~0xff)
+
+typedef struct stat stat_t;
 
 typedef struct file_node {
     struct file_node *next;
@@ -41,6 +50,7 @@ typedef struct config {
 
 typedef struct file {
     char *name;
+    char *path;
     char *symlink;
     mode_t mode;
     char type;
@@ -55,6 +65,7 @@ typedef struct file {
 } file_t;
 
 void debug_display_config(config_t *config); // DEBUG
+void debug_display_file(file_t *filedata); // DEBUG
 
 int my_ls(int argc, char **argv);
 
@@ -67,17 +78,21 @@ int display_files_data(file_t *file, int size, config_t *config);
 void display_type_and_right(file_t *file);
 void display_owner(uid_t uid, gid_t gid);
 void display_size(file_t *file);
-void dipslay_lastmod_time(file_t *file);
+void display_lastmod_time(file_t *file);
 
-int get_files_data(files_name_t *path, file_t **files,
+int get_files_data(files_name_t *names, const char *path, file_t **files,
 config_t *config);
-int get_files_name(config_t *config, DIR *dir);
 
 int search_char_in_str(const char *str, char c);
 int is_hidden_file(char *file_name);
+char *get_filename(char *path);
+char get_filetype_char(mode_t mode);
+char *merge_str(const char *stra, const char *strb);
 
 int get_argument(config_t *config, int argc, char **argv);
+
 void destroy_config(config_t *config);
+void destroy_file(file_t *file);
 
 int filelist_push(files_name_t *list, char *path);
 int filelist_destroy(files_name_t *list, int free_path);

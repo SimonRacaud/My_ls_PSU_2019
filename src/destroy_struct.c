@@ -11,3 +11,10 @@ void destroy_config(config_t *config)
 {
     filelist_destroy(&config->path_list, 0);
 }
+
+void destroy_file(file_t *file)
+{
+    free(file->path);
+    if (file->symlink != NULL)
+        free(file->symlink);
+}

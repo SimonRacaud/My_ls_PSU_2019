@@ -43,10 +43,10 @@ int starting_browse(config_t *config)
 
     remove_nonexistant_files(config);
     if (config->directory_mode) {
-        if (get_files_data(&config->path_list, &files, config))
+        if (get_files_data(&config->path_list, "", &files, config))
             return EXIT_ERROR;
         // Sort files
-        display_files_data(files, config->path_list.size, config); // Display files data
+        //display_files_data(files, config->path_list.size, config); // Display files data
     } else {
         /*for (file_node_t *n = node; n != NULL; n = n->next) {
             if (n->path == NULL)

@@ -7,7 +7,7 @@
 
 #include "my_ls.h"
 
-void dipslay_lastmod_time(file_t *file)
+void display_lastmod_time(file_t *file)
 {
     my_putstr(ctime(file->last_mod));
     my_putchar(' ');

@@ -26,6 +26,28 @@ void debug_display_config(config_t *config)
     my_putstr("--------------------\n");
 }
 
+void debug_display_file(file_t *filedata)
+{
+    my_printf("Name: %s\n", filedata->name);
+    my_printf("Path: %s\n", filedata->path);
+    if (filedata->symlink != NULL)
+        my_printf("Symlink: %s\n", filedata->symlink);
+    my_printf("Type: %c\n", filedata->type);
+    my_printf("Hard Link: %u\n", filedata->link);
+    my_printf("Inode: %u\n", filedata->inode);
+    my_printf("Size: %u\n", filedata->size);
+    if (!filedata->minor && !filedata->major) {
+        my_printf("Minor: N/A\n");
+        my_printf("Major: N/A\n");
+    } else {
+        my_printf("Minor: %u\n", filedata->minor);
+        my_printf("Major: %u\n", filedata->major);
+    }
+    my_printf("UID: %u\n", filedata->uid);
+    my_printf("GID: %u\n", filedata->gid);
+    my_printf("Time last mode: %u\n", filedata->last_mod);
+}
+
 int my_ls(int argc, char **argv)
 {
     config_t config;
