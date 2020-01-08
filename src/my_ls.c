@@ -43,8 +43,8 @@ void debug_display_file(file_t *filedata)
         my_printf("Minor: %u\n", filedata->minor);
         my_printf("Major: %u\n", filedata->major);
     }
-    my_printf("UID: %u\n", filedata->uid);
-    my_printf("GID: %u\n", filedata->gid);
+    my_printf("UID: %s\n", filedata->owner_user);
+    my_printf("GID: %s\n", filedata->owner_group);
     my_printf("Time last mode: %u\n", filedata->last_mod);
     my_putstr("--------------------\n");
 }

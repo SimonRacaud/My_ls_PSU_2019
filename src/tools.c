@@ -46,3 +46,16 @@ char *my_strdup(char const *src)
     my_strcpy(cpy, src);
     return cpy;
 }
+
+int my_nbrlen(const int nbr)
+{
+    int len = 1;
+    double nb = nbr;
+
+    if (nb < 0)
+        nb = -nb;
+    while ((nb /= 10) >= 1) {
+        len++;
+    }
+    return len;
+}

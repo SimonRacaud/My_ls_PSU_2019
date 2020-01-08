@@ -14,6 +14,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <time.h>
+#include <grp.h>
 #include <pwd.h>
 #include <dirent.h>
 #include "my.h"
@@ -55,10 +57,16 @@ typedef struct file {
     mode_t mode;
     char type;
     nlink_t link;
+    int link_max_size;
     ino_t inode;
     uid_t uid;
     gid_t gid;
+    char *owner_user;
+    int max_len_owner_user;
+    char *owner_group;
+    int max_len_owner_group;
     off_t size;
+    int size_max_len;
     time_t last_mod;
     unsigned int minor;
     unsigned int major;
@@ -75,11 +83,15 @@ int browse_folder(config_t *config, const char *pathdir);
 int sort_files(file_t *files, int size, config_t *config);
 void quick_sort_files(file_t *files, int idx_begin, int idx_end);
 
-int display_files_data(file_t *file, int size, config_t *config);
-void display_type_and_right(file_t *file);
-void display_owner(uid_t uid, gid_t gid);
-void display_size(file_t *file);
-void display_lastmod_time(file_t *file);
+int display_files_data(file_t *files, int size, config_t *config);
+void display_type_and_right(const file_t *file);
+void display_owner(const file_t *file);
+void display_size(const file_t *file);
+void display_lastmod_time(const file_t *file);
+void display_link(const file_t *file);
+void get_max_owner_len(file_t *files, int size);
+void get_link_max_size(file_t *files, int size);
+void get_size_max_size(file_t *files, int size);
 
 int get_files_data(files_name_t *names, const char *path, file_t **files,
 config_t *config);
@@ -90,6 +102,7 @@ char *get_filename(char *path);
 char get_filetype_char(mode_t mode);
 char *merge_str(const char *stra, const char *strb);
 char *my_strdup(char const *src);
+int my_nbrlen(int nbr);
 
 int get_argument(config_t *config, int argc, char **argv);
 

@@ -18,13 +18,15 @@ SRC	=	$(DSRC)main.c						\
 		$(DSRC)file_list.c					\
 		$(DSRC)get_files_data.c				\
 		$(DSRC)sort/sort_files.c			\
-		$(DSRC)sort/quick_sort_files.c	\
-		#$(DSRC)browse_folder.c	\
+		$(DSRC)sort/quick_sort_files.c		\
 		$(DSRC)display/display_file_data.c	\
 		$(DSRC)display/display_file_data_type_right.c	\
-		$(DSRC)display/display_file_data_owner.c	\
-		$(DSRC)display/display_file_data_size.c	\
-		$(DSRC)display/display_file_data_time.c	\
+		$(DSRC)display/display_file_data_owner.c		\
+		$(DSRC)display/display_file_data_size.c			\
+		$(DSRC)display/display_file_data_link.c			\
+		$(DSRC)display/display_file_data_time.c			\
+		$(DSRC)display/display_file_data_get_len.c		\
+		#$(DSRC)browse_folder.c	\
 
 OBJ	=	$(SRC:.c=.o)
 

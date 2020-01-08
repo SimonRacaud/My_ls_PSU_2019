@@ -17,8 +17,7 @@ static int test_opendir(file_node_t *file_node)
         my_putstr_error("': No such file or directory\n");
         file_node->path = NULL;
         return EXIT_ERROR;
-    }
-    if (errno != ENOTDIR && closedir(dir) == -1) {
+    } else if (dir && closedir(dir) == -1) {
         my_putstr_error("ERROR : close dir\n");
     }
     return EXIT_SUCCESS;
@@ -48,10 +47,10 @@ int starting_browse(config_t *config)
     if (config->directory_mode) {
         if (get_files_data(&config->path_list, "", &files, config))
             return EXIT_ERROR;
-        sort_files(files, size_path_list, config);
         for (int i = 0 ; i < size_path_list; i++)
             debug_display_file(&files[i]);
-        //display_files_data(files, config->path_list.size, config); // Display files data
+        sort_files(files, size_path_list, config);
+        display_files_data(files, size_path_list, config);
         destroy_file_array(files, size_path_list);
     } else {
         /*for (file_node_t *n = node; n != NULL; n = n->next) {

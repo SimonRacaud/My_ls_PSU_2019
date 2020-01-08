@@ -16,6 +16,8 @@ static void destroy_file(file_t *file)
 {
     free(file->path);
     free(file->name);
+    free(file->owner_user);
+    free(file->owner_group);
     if (file->symlink != NULL)
         free(file->symlink);
 }

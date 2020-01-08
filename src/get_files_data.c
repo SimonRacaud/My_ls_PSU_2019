@@ -30,6 +30,8 @@ static void fill_file_data(file_t *file, stat_t *filestat)
     file->last_mod = filestat->st_mtime;
     file->minor = DEVICE_MINOR(filestat->st_rdev);
     file->major = DEVICE_MAJOR(filestat->st_rdev);
+    file->owner_user = my_strdup(getpwuid(file->uid)->pw_name);
+    file->owner_group = my_strdup(getgrgid(file->gid)->gr_name);
     if (file->type == 'l') {
         get_symblink(file);
     } else
@@ -69,6 +71,7 @@ config_t *config)
         if (n->path != NULL) {
             idx++;
         }
+
     }
     return EXIT_SUCCESS;
 }

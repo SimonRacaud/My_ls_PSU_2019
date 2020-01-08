@@ -9,37 +9,45 @@
 
 static void display_line(const file_t *file)
 {
-    display_type_and_right(file->mode);
-    my_printf("%d ");
-    display_owner(file->uid, file->gid);
+    display_type_and_right(file);
+    display_link(file);
+    display_owner(file);
     display_size(file);
-    my_putstr(file->name);
+    display_lastmod_time(file);
+    for (int i = 0; file->name[i] != '\0'; i++) {
+        my_putchar(file->name[i]);
+    }
     if (file->type == 'l')
         my_printf(" -> %s", file->symlink);
-    my_putchar('\n')
+    my_putchar('\n');
 }
 
-static void list_display(file_t *file, int size)
+static void list_display(file_t *files, int size, config_t *config)
 {
-    my_printf("total %d\n", size);
+    get_max_owner_len(files, size);
+    get_link_max_size(files, size);
+    get_size_max_size(files, size);
+    if (!config->directory_mode)
+        my_printf("total %d\n", size);
     for (int i = 0; i < size; i++) {
-        display_line(file[i]);
+        display_line(&files[i]);
     }
 }
 
-static void standard_display(file_t *file, int size)
+static void standard_display(file_t *files, int size)
 {
     for (int i = 0; i < size; i++) {
-        my_putstr(file->name);
+        my_putstr(files[i].name);
+        my_putchar('\n');
     }
 }
 
-int display_files_data(file_t *file, int size, config_t *config)
+int display_files_data(file_t *files, int size, config_t *config)
 {
     if (config->list_mode) {
-        list_display(file, size);
+        list_display(files, size, config);
     } else {
-        standard_display(file, size);
+        standard_display(files, size);
     }
     return EXIT_SUCCESS;
 }
