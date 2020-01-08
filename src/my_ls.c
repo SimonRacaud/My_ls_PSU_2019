@@ -55,7 +55,7 @@ int my_ls(int argc, char **argv)
 
     if (get_argument(&config, argc, argv) == EXIT_ERROR)
         return EXIT_ERROR;
-    debug_display_config(&config); // DEBUG
+    //debug_display_config(&config); // DEBUG
     if (starting_browse(&config) == EXIT_ERROR)
         return EXIT_ERROR;
     destroy_config(&config);

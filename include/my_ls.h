@@ -79,6 +79,7 @@ int my_ls(int argc, char **argv);
 
 int starting_browse(config_t *config);
 int browse_folder(config_t *config, const char *pathdir);
+int get_subfiles_name(files_name_t *names, const char *pathdir);
 
 int sort_files(file_t *files, int size, config_t *config);
 void quick_sort_files(file_t *files, int idx_begin, int idx_end);

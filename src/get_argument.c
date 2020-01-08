@@ -74,6 +74,6 @@ int get_argument(config_t *config, int argc, char **argv)
         }
     }
     if (config->path_list.size == 0)
-        filelist_push(&config->path_list, ".");
+        filelist_push(&config->path_list, "./");
     return EXIT_SUCCESS;
 }

@@ -31,7 +31,7 @@ static void remove_nonexistant_files(config_t *config)
         }
     }
     if (count_notempty_node(&config->path_list) == 0) {
-        filelist_push(&config->path_list, ".");
+        filelist_push(&config->path_list, "./");
     }
 }
 
@@ -47,18 +47,16 @@ int starting_browse(config_t *config)
     if (config->directory_mode) {
         if (get_files_data(&config->path_list, "", &files, config))
             return EXIT_ERROR;
-        for (int i = 0 ; i < size_path_list; i++)
-            debug_display_file(&files[i]);
         sort_files(files, size_path_list, config);
         display_files_data(files, size_path_list, config);
         destroy_file_array(files, size_path_list);
     } else {
-        /*for (file_node_t *n = node; n != NULL; n = n->next) {
+        for (file_node_t *n = node; n != NULL; n = n->next) {
             if (n->path == NULL)
                 continue;
             else if (browse_folder(config, n->path))
                 return EXIT_ERROR;
-        }*/
+        }
     }
     return EXIT_SUCCESS;
 }

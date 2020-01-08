@@ -1,0 +1,39 @@
+/*
+** EPITECH PROJECT, 2020
+** PSU_my_ls_2019
+** File description:
+** Browse folder
+*/
+
+#include "my_ls.h"
+
+static int recursive_browse(file_t *files, int size, config_t *config)
+{
+    for (int idx = 0; idx < size; idx++) {
+        if (files[idx].type == 'd' && browse_folder(config, files[idx].path))
+            return EXIT_ERROR;
+    }
+    return EXIT_SUCCESS;
+}
+
+int browse_folder(config_t *config, const char *pathdir)
+{
+    files_name_t files_name;
+    file_t *files = NULL;
+    int nb_files_in_dir;
+
+    if (get_subfiles_name(&files_name, pathdir))
+        return EXIT_ERROR;
+    else if (get_files_data(&config->path_list, pathdir, &files, config))
+        return EXIT_ERROR;
+    nb_files_in_dir = files_name.size;
+    sort_files(files, nb_files_in_dir, config);
+    display_files_data(files, nb_files_in_dir, config);
+    filelist_destroy(&config->path_list, 1);
+    if (config->recusif_mode) {
+        if (recursive_browse(files, nb_files_in_dir, config))
+            return EXIT_ERROR;
+    }
+    destroy_file_array(files, files_name.size);
+    return EXIT_SUCCESS;
+}
