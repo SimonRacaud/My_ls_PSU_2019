@@ -65,7 +65,7 @@ config_t *config)
     (*files) = malloc(sizeof(file_t) * size_names);
     if (!(*files))
         return EXIT_ERROR;
-    for (file_node_t *n = config->path_list.next; n != NULL; n = n->next) {
+    for (file_node_t *n = names->next; n != NULL; n = n->next) {
         if (n->path != NULL && get_data(&((*files)[idx]), n->path, path))
             return EXIT_ERROR;
         if (n->path != NULL) {

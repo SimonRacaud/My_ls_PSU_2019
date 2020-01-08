@@ -18,18 +18,18 @@ static int recursive_browse(file_t *files, int size, config_t *config)
 
 int browse_folder(config_t *config, const char *pathdir)
 {
-    files_name_t files_name;
+    files_name_t files_name = {NULL, NULL, 0};
     file_t *files = NULL;
     int nb_files_in_dir;
 
     if (get_subfiles_name(&files_name, pathdir))
         return EXIT_ERROR;
-    else if (get_files_data(&config->path_list, pathdir, &files, config))
+    else if (get_files_data(&files_name, pathdir, &files, config))
         return EXIT_ERROR;
     nb_files_in_dir = files_name.size;
     sort_files(files, nb_files_in_dir, config);
     display_files_data(files, nb_files_in_dir, config);
-    filelist_destroy(&config->path_list, 1);
+    filelist_destroy(&files_name, 1);
     if (config->recusif_mode) {
         if (recursive_browse(files, nb_files_in_dir, config))
             return EXIT_ERROR;

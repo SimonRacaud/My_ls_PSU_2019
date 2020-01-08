@@ -43,6 +43,8 @@ int filelist_destroy(files_name_t *list, int free_path)
     if (list != NULL && list->next != NULL)
         filelist_destroy_nodes(list->next, free_path);
     list->size = 0;
+    list->next = NULL;
+    list->last = NULL;
     return EXIT_SUCCESS;
 }
 
