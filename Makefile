@@ -13,6 +13,7 @@ SRC	=	$(DSRC)main.c								\
 		$(DSRC)get_argument.c						\
 		$(DSRC)destroy_struct.c						\
 		$(DSRC)tools.c								\
+		$(DSRC)my_strcmp_nocase.c					\
 		$(DSRC)browse/starting_browse.c				\
 		$(DSRC)browse/file_list.c					\
 		$(DSRC)browse/browse_folder.c				\

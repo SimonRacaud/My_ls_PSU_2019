@@ -77,9 +77,13 @@ void debug_display_file(file_t *filedata); // DEBUG
 
 int my_ls(int argc, char **argv);
 
+int get_argument(config_t *config, int argc, char **argv);
+
 int starting_browse(config_t *config);
 int browse_folder(config_t *config, const char *pathdir);
 int get_subfiles_name(files_name_t *names, const char *pathdir);
+int get_files_data(files_name_t *names, const char *path, file_t **files,
+    config_t *config);
 
 int sort_files(file_t *files, int size, config_t *config);
 void quick_sort_files(file_t *files, int idx_begin, int idx_end);
@@ -94,8 +98,13 @@ void get_max_owner_len(file_t *files, int size);
 void get_link_max_size(file_t *files, int size);
 void get_size_max_size(file_t *files, int size);
 
-int get_files_data(files_name_t *names, const char *path, file_t **files,
-config_t *config);
+void destroy_config(config_t *config);
+void destroy_file_array(file_t *files, int size);
+
+int filelist_push(files_name_t *list, char *path);
+int filelist_destroy(files_name_t *list, int free_path);
+char *filelist_getnext_path(files_name_t *list);
+int count_notempty_node(files_name_t *list);
 
 int search_char_in_str(const char *str, char c);
 int is_hidden_file(char *file_name);
@@ -104,15 +113,6 @@ char get_filetype_char(mode_t mode);
 char *merge_str(const char *stra, const char *strb);
 char *my_strdup(char const *src);
 int my_nbrlen(int nbr);
-
-int get_argument(config_t *config, int argc, char **argv);
-
-void destroy_config(config_t *config);
-void destroy_file_array(file_t *files, int size);
-
-int filelist_push(files_name_t *list, char *path);
-int filelist_destroy(files_name_t *list, int free_path);
-char *filelist_getnext_path(files_name_t *list);
-int count_notempty_node(files_name_t *list);
+int my_strcmp_nocase(char const *s1, char const *s2);
 
 #endif

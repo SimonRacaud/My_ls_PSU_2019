@@ -32,7 +32,7 @@ static void sort_by_name(file_t *files, int size)
     if (size <= 1)
         return;
     while (!is_sorted) {
-        if (my_strcmp(files[idx].name, files[idx + 1].name) > 0) {
+        if (my_strcmp_nocase(files[idx].name, files[idx + 1].name) > 0) {
             temp = files[idx];
             files[idx] = files[idx + 1];
             files[idx + 1] = temp;
