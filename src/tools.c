@@ -29,8 +29,20 @@ char *merge_str(const char *stra, const char *strb)
     int sizeb = my_strlen(strb);
     char *merge = malloc(sizeof(char) * (sizea + sizeb + 1));
 
-    my_strcpy(merge, stra);
-    my_strcpy(merge + sizea, strb);
+    if (stra[0] != '\0')
+        my_strcpy(merge, stra);
+    if (strb[0] != '\0')
+        my_strcpy(&merge[sizea], strb);
     merge[sizea + sizeb] = '\0';
     return merge;
+}
+
+char *my_strdup(char const *src)
+{
+    char *cpy = malloc(sizeof(char) * (my_strlen(src) + 1));
+
+    if (cpy == NULL)
+        return (cpy);
+    my_strcpy(cpy, src);
+    return cpy;
 }

@@ -38,15 +38,21 @@ static void remove_nonexistant_files(config_t *config)
 
 int starting_browse(config_t *config)
 {
+
     file_t *files = NULL;
+    int size_path_list;
     file_node_t *node = config->path_list.next;
 
     remove_nonexistant_files(config);
+    size_path_list = count_notempty_node(&config->path_list);
     if (config->directory_mode) {
         if (get_files_data(&config->path_list, "", &files, config))
             return EXIT_ERROR;
-        // Sort files
+        sort_files(files, size_path_list, config);
+        for (int i = 0 ; i < size_path_list; i++)
+            debug_display_file(&files[i]);
         //display_files_data(files, config->path_list.size, config); // Display files data
+        destroy_file_array(files, size_path_list);
     } else {
         /*for (file_node_t *n = node; n != NULL; n = n->next) {
             if (n->path == NULL)

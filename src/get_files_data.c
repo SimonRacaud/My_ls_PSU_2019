@@ -40,16 +40,17 @@ static int get_data(file_t *file, char *filename, const char *dir_path)
 {
     stat_t filestat;
 
-    file->path = merge_str(dir_path, filename);
-    if (lstat(file->path, &filestat) == -1) {
+    if (!(file->path = merge_str(dir_path, filename))) {
+        perror("Error: merge path and filename.\n");
+        return EXIT_ERROR;
+    } else if (lstat(file->path, &filestat) == -1) {
         my_putstr_error("ERROR: get stat file: ");
         my_putstr_error(file->path);
         my_putstr_error("\n");
         return EXIT_ERROR;
     }
     fill_file_data(file, &filestat);
-    file->name = filename;
-    debug_display_file(file);
+    file->name = my_strdup(filename);
     return EXIT_SUCCESS;
 }
 
@@ -59,13 +60,13 @@ config_t *config)
     int size_names = count_notempty_node(names);
     int idx = 0;
 
-    *files = malloc(sizeof(file_t) * size_names);
+    (*files) = malloc(sizeof(file_t) * size_names);
     if (!(*files))
         return EXIT_ERROR;
     for (file_node_t *n = config->path_list.next; n != NULL; n = n->next) {
-        if (n->path != NULL && get_data(files[idx], n->path, path))
+        if (n->path != NULL && get_data(&((*files)[idx]), n->path, path))
             return EXIT_ERROR;
-        else if (n->path != NULL) {
+        if (n->path != NULL) {
             idx++;
         }
     }

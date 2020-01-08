@@ -73,6 +73,7 @@ int starting_browse(config_t *config);
 int browse_folder(config_t *config, const char *pathdir);
 
 int sort_files(file_t *files, int size, config_t *config);
+void quick_sort_files(file_t *files, int idx_begin, int idx_end);
 
 int display_files_data(file_t *file, int size, config_t *config);
 void display_type_and_right(file_t *file);
@@ -88,11 +89,12 @@ int is_hidden_file(char *file_name);
 char *get_filename(char *path);
 char get_filetype_char(mode_t mode);
 char *merge_str(const char *stra, const char *strb);
+char *my_strdup(char const *src);
 
 int get_argument(config_t *config, int argc, char **argv);
 
 void destroy_config(config_t *config);
-void destroy_file(file_t *file);
+void destroy_file_array(file_t *files, int size);
 
 int filelist_push(files_name_t *list, char *path);
 int filelist_destroy(files_name_t *list, int free_path);

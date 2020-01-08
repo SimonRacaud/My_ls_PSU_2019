@@ -12,9 +12,18 @@ void destroy_config(config_t *config)
     filelist_destroy(&config->path_list, 0);
 }
 
-void destroy_file(file_t *file)
+static void destroy_file(file_t *file)
 {
     free(file->path);
+    free(file->name);
     if (file->symlink != NULL)
         free(file->symlink);
+}
+
+void destroy_file_array(file_t *files, int size)
+{
+    for (int i = 0; i < size; i++) {
+        destroy_file(&files[i]);
+    }
+    free(files);
 }

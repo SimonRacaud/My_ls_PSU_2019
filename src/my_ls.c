@@ -46,6 +46,7 @@ void debug_display_file(file_t *filedata)
     my_printf("UID: %u\n", filedata->uid);
     my_printf("GID: %u\n", filedata->gid);
     my_printf("Time last mode: %u\n", filedata->last_mod);
+    my_putstr("--------------------\n");
 }
 
 int my_ls(int argc, char **argv)
