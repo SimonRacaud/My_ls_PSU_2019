@@ -16,6 +16,12 @@ static void get_symblink(file_t *file)
         perror("ERROR: get symbolik link path\n");
         file->symlink = NULL;
     }
+    for (int i = 0; file->symlink[i] != '\0'; i++) {
+        if (file->symlink[i] == ':') {
+            file->symlink[i] = '\0';
+            break;
+        }
+    }
 }
 
 static void fill_file_data(file_t *file, stat_t *filestat)

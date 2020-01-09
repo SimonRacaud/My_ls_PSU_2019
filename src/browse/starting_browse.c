@@ -49,8 +49,10 @@ static int browse_sub(config_t *config, file_t *files)
     for (int idx = 0; idx < config->size_path_list; idx++) {
         if (files[idx].type == 'd' && browse_folder(config, files[idx].path))
             return EXIT_ERROR;
-        else
+        else if (files[idx].type != 'd') {
+            printf("DISP %d \n", config->size_path_list);
             display_file_data(&files[idx], config);
+        }
     }
     return EXIT_SUCCESS;
 }
