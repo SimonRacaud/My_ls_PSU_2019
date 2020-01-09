@@ -34,6 +34,6 @@ int browse_folder(config_t *config, const char *pathdir)
         if (recursive_browse(files, nb_files_in_dir, config))
             return EXIT_ERROR;
     }
-    destroy_file_array(files, files_name.size);
+    destroy_file_array(files, nb_files_in_dir);
     return EXIT_SUCCESS;
 }
