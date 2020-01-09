@@ -21,6 +21,7 @@
 #include "my.h"
 
 #define EXIT_ERROR 84
+#define EXIT_ERROR2 42
 
 #define DEVICE_MAJOR(st_rdev) ((st_rdev >> 8) & 0xfff) \
 | ((unsigned int) (st_rdev >> 32) & ~0xfff)

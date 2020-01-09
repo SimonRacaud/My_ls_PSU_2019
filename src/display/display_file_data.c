@@ -57,7 +57,8 @@ const char *pathdir)
 {
     static int is_first = 1;
 
-    if (config->recusif_mode && !config->directory_mode) {
+    if ((config->recusif_mode || config->size_path_list > 1) &&
+    !config->directory_mode) {
         if (!is_first)
             my_putchar('\n');
         else
