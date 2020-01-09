@@ -48,6 +48,7 @@ typedef struct config {
     char directory_mode;
     char recusif_mode;
     files_name_t path_list;
+    int size_path_list;
 } config_t;
 
 typedef struct file {

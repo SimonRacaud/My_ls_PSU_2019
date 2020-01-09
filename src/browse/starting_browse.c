@@ -37,26 +37,22 @@ static void remove_nonexistant_files(config_t *config)
 
 int starting_browse(config_t *config)
 {
-
     file_t *files = NULL;
-    int size_path_list;
     file_node_t *node = config->path_list.next;
 
     remove_nonexistant_files(config);
-    size_path_list = count_notempty_node(&config->path_list);
+    config->size_path_list = count_notempty_node(&config->path_list);
+    if (get_files_data(&config->path_list, "", &files, config))
+        return EXIT_ERROR;
+    sort_files(files, config->size_path_list, config);
     if (config->directory_mode) {
-        if (get_files_data(&config->path_list, "", &files, config))
-            return EXIT_ERROR;
-        sort_files(files, size_path_list, config);
-        display_files_data(files, size_path_list, config, "");
-        destroy_file_array(files, size_path_list);
+        display_files_data(files, config->size_path_list, config, "");
     } else {
-        for (file_node_t *n = node; n != NULL; n = n->next) {
-            if (n->path == NULL)
-                continue;
-            else if (browse_folder(config, n->path))
+        for (int idx = 0; idx < config->size_path_list; idx++) {
+            if (browse_folder(config, files[idx].path))
                 return EXIT_ERROR;
         }
     }
+    destroy_file_array(files, config->size_path_list);
     return EXIT_SUCCESS;
 }
