@@ -7,10 +7,10 @@
 
 #include "my.h"
 
-static char alpha_in_lower(char c)
+static char alpha_in_upper(char c)
 {
-    if (c >= 'A' && c <= 'Z') {
-        return c + ('a' - 'A');
+    if (c >= 'a' && c <= 'z') {
+        return c - ('a' - 'A');
     }
     return c;
 }
@@ -23,8 +23,8 @@ int my_strcmp_nocase(char const *s1, char const *s2)
     if (my_strlen(s2) > size)
         size = my_strlen(s2);
     while (i < size) {
-        if ((alpha_in_lower(s1[i]) - alpha_in_lower(s2[i])) != 0) {
-            return (alpha_in_lower(s1[i]) - alpha_in_lower(s2[i]));
+        if ((alpha_in_upper(s1[i]) - alpha_in_upper(s2[i])) != 0) {
+            return (alpha_in_upper(s1[i]) - alpha_in_upper(s2[i]));
         }
         if (s1[i] == '\0' || s2[i] == '\0')
             break;
