@@ -21,6 +21,7 @@ static void reverse_sort(file_t *files, int size)
 static void sort_by_time(file_t *files, int size)
 {
     quick_sort_files(files, 0, (size - 1));
+    reverse_sort(files, size);
 }
 
 static void sort_by_name(file_t *files, int size)
@@ -29,8 +30,6 @@ static void sort_by_name(file_t *files, int size)
     int idx = 0;
     file_t temp;
 
-    if (size <= 1)
-        return;
     while (!is_sorted) {
         if (my_strcmp_nocase(files[idx].name, files[idx + 1].name) > 0) {
             temp = files[idx];
@@ -47,6 +46,9 @@ static void sort_by_name(file_t *files, int size)
 
 int sort_files(file_t *files, int size, config_t *config)
 {
+    if (size <= 1) {
+        return EXIT_SUCCESS;
+    }
     if (config->sort_mod_time_mode) {
         sort_by_time(files, size);
     } else {

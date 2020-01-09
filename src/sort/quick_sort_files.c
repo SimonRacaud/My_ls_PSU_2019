@@ -17,19 +17,20 @@ static void swap(file_t *a, file_t *b)
 
 void quick_sort_files(file_t *files, int idx_begin, int idx_end)
 {
-    const int pivot = files[idx_begin].last_mod;
+    time_t pivot;
     int cur_left = idx_begin - 1;
     int cur_right = idx_end + 1;
 
     if (idx_begin - 1 == idx_end)
-        return;
+        return;;
+    pivot = files[idx_begin].last_mod;
     while (1) {
         do {
             cur_left++;
-        } while (files[cur_left].last_mod > pivot);
+        } while (files[cur_left].last_mod < pivot);
         do {
             cur_right--;
-        } while (files[cur_right].last_mod < pivot);
+        } while (files[cur_right].last_mod > pivot);
         if (cur_left >= cur_right)
             break;
         swap(&files[cur_left], &files[cur_right]);
