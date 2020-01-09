@@ -17,7 +17,7 @@ static void get_symblink(file_t *file)
         file->symlink = NULL;
     }
     for (int i = 0; file->symlink[i] != '\0'; i++) {
-        if (file->symlink[i] == ':') {
+        if (!is_path_char(file->symlink[i])) {
             file->symlink[i] = '\0';
             break;
         }

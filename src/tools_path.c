@@ -7,6 +7,15 @@
 
 #include "my_ls.h"
 
+int is_path_char(const char c)
+{
+    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+        return 1;
+    else if ((c >= '0' && c <= '9') || c == '/' || c == '-' || c == '_')
+        return 1;
+    return 0;
+}
+
 char *get_filename(const char *path)
 {
     int pos_last_slash = -1;
@@ -53,7 +62,7 @@ char *merge_path_filename(const char *path, const char *filename)
     }
     if (path[0] != '\0')
         my_strcpy(merge, path);
-    if (path[sizea - 1] != '/' && path[0] != '\0' && filename[0] == '\0') {
+    if (path[sizea - 1] != '/' && path[0] != '\0') {
         merge[sizea] = '/';
         sizea++;
     }

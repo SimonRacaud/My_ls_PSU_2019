@@ -11,15 +11,17 @@ void display_size(const file_t *file)
 {
     int len_minor = my_nbrlen(file->minor);
     int len_major = my_nbrlen(file->major);
-    int space_minor = file->size_max_len - len_major - 2;
-    int space_major = file->size_max_len - len_minor - 2;
+    int space_minor = (file->size_max_len - (len_major + len_minor) - 2) / 2;
+    int space_major = (file->size_max_len - (len_major + len_minor) - 2) / 2;
 
-    if (file->type == 'c') {
-        for (int i = len_major; i < space_major; i++)
+    if (file->type == 'c' || file->type == 'b') {
+        if ((file->size_max_len - (len_major + len_minor) - 2) % 2 != 0)
+            space_major++;
+        for (int i = 0; i < space_major; i++)
             my_putchar(' ');
         my_printf("%u", file->major);
         my_putstr(", ");
-        for (int i = len_minor; i < space_minor; i++)
+        for (int i = 0; i < space_minor; i++)
             my_putchar(' ');
         my_printf("%u ", file->minor);
     } else {

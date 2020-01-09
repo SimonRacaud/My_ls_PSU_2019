@@ -46,8 +46,8 @@ static void size_eval_len(file_t *file, int *max_len)
 {
     int len = 0;
 
-    if (file->type == 'c') {
-        len = my_nbrlen(file->minor) + my_nbrlen(file->size) + 2;
+    if (file->type == 'c' || file->type == 'b') {
+        len = my_nbrlen(file->minor) + my_nbrlen(file->major) + 2;
         if (len > *max_len)
             *max_len = len;
     } else {

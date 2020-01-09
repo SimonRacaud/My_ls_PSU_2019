@@ -119,5 +119,6 @@ int my_nbrlen(int nbr);
 int my_strcmp_nocase(char const *s1, char const *s2);
 char *merge_path_filename(const char *stra, const char *strb);
 char *get_filename(const char *path);
+int is_path_char(const char c);
 
 #endif

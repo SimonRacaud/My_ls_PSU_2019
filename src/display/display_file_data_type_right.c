@@ -27,7 +27,8 @@ static void display_right_everyone(const mode_t mode)
             my_putchar('x');
     } else if (mode & S_ISVTX) {
         my_putchar('T');
-    }
+    } else
+        my_putchar('-');
 }
 
 static void display_right(const mode_t mode)
