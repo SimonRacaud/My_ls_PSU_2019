@@ -29,3 +29,13 @@ void display_size(const file_t *file)
         my_putchar(' ');
     }
 }
+
+int get_sum_nb_block(file_t *files, int size)
+{
+    int blocks = 0;
+
+    for (int i = 0; i < size; i++) {
+        blocks += files[i].nb_block_alloc;
+    }
+    return (blocks / 2);
+}

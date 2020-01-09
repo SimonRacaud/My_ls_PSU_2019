@@ -24,7 +24,7 @@ int browse_folder(config_t *config, const char *pathdir)
 
     if (get_subfiles_name(&files_name, pathdir))
         return EXIT_ERROR;
-    else if (get_files_data(&files_name, pathdir, &files, config))
+    else if (get_files_data(&files_name, pathdir, &files))
         return EXIT_ERROR;
     nb_files_in_dir = files_name.size;
     sort_files(files, nb_files_in_dir, config);

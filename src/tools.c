@@ -23,28 +23,6 @@ int is_hidden_file(char *file_name)
     return 0;
 }
 
-char *merge_path_filename(const char *stra, const char *strb)
-{
-    int sizea = my_strlen(stra);
-    int sizeb = my_strlen(strb);
-    char *merge = malloc(sizeof(char) * (sizea + sizeb + 2));
-
-    if (!merge) {
-        my_putstr_error("ERORR: malloc : merge_str() \n");
-        return NULL;
-    }
-    if (stra[0] != '\0')
-        my_strcpy(merge, stra);
-    if (stra[sizea - 1] != '/' && stra[0] != '\0') {
-        merge[sizea] = '/';
-        sizea++;
-    }
-    if (strb[0] != '\0')
-        my_strcpy(&merge[sizea], strb);
-    merge[sizea + sizeb] = '\0';
-    return merge;
-}
-
 char *my_strdup(char const *src)
 {
     char *cpy = malloc(sizeof(char) * (my_strlen(src) + 1));

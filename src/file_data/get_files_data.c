@@ -57,8 +57,7 @@ static int get_data(file_t *file, char *filename, const char *dir_path)
     return EXIT_SUCCESS;
 }
 
-int get_files_data(files_name_t *names, const char *path, file_t **files,
-config_t *config)
+int get_files_data(files_name_t *names, const char *path, file_t **files)
 {
     int size_names = count_notempty_node(names);
     int idx = 0;

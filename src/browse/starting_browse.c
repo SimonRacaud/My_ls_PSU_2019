@@ -30,23 +30,27 @@ static int test_opendir(file_node_t *file_node)
 
 static int remove_nonexistant_files(config_t *config)
 {
+    int ret = EXIT_SUCCESS;
+
     for (file_node_t *n = config->path_list.next; n != NULL; n = n->next) {
         if (test_opendir(n) == EXIT_ERROR) {
             n->path = NULL;
-            return EXIT_ERROR;
+            ret = EXIT_ERROR;
         }
     }
     if (count_notempty_node(&config->path_list) == 0) {
         return EXIT_ERROR2;
     }
-    return EXIT_SUCCESS;
+    return ret;
 }
 
 static int browse_sub(config_t *config, file_t *files)
 {
     for (int idx = 0; idx < config->size_path_list; idx++) {
-        if (browse_folder(config, files[idx].path))
+        if (files[idx].type == 'd' && browse_folder(config, files[idx].path))
             return EXIT_ERROR;
+        else
+            display_file_data(&files[idx], config);
     }
     return EXIT_SUCCESS;
 }
@@ -60,7 +64,7 @@ int starting_browse(config_t *config)
     if (ret == EXIT_ERROR2)
         return EXIT_ERROR;
     config->size_path_list = count_notempty_node(&config->path_list);
-    if (get_files_data(&config->path_list, "", &files, config))
+    if (get_files_data(&config->path_list, "", &files))
         return EXIT_ERROR;
     sort_files(files, config->size_path_list, config);
     if (config->directory_mode) {

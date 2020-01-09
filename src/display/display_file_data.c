@@ -22,16 +22,6 @@ static void display_line(const file_t *file)
     my_putchar('\n');
 }
 
-static int get_sum_nb_block(file_t *files, int size)
-{
-    int blocks = 0;
-
-    for (int i = 0; i < size; i++) {
-        blocks += files[i].nb_block_alloc;
-    }
-    return (blocks / 2);
-}
-
 static void list_display(file_t *files, int size, config_t *config)
 {
     get_max_owner_len(files, size);
@@ -50,6 +40,19 @@ static void standard_display(file_t *files, int size)
         my_putstr(files[i].name);
         my_putchar('\n');
     }
+}
+
+int display_file_data(file_t *file, config_t *config)
+{
+    if (config->list_mode) {
+        get_max_owner_len(file, 1);
+        get_link_max_size(file, 1);
+        get_size_max_size(file, 1);
+        display_line(file);
+    } else {
+        my_printf("%s\n", file->name);
+    }
+    return EXIT_SUCCESS;
 }
 
 int display_files_data(file_t *files, int size, config_t *config,
