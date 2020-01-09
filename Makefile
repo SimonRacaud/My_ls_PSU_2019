@@ -16,6 +16,7 @@ SRC	=	$(DSRC)main.c								\
 		$(DSRC)tools_path.c								\
 		$(DSRC)my_strcmp_nocase.c					\
 		$(DSRC)browse/starting_browse.c				\
+		$(DSRC)browse/remove_nonexistant_files.c	\
 		$(DSRC)browse/file_list.c					\
 		$(DSRC)browse/browse_folder.c				\
 		$(DSRC)browse/get_subfiles_name.c			\

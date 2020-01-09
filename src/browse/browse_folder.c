@@ -21,10 +21,13 @@ int browse_folder(config_t *config, const char *pathdir)
     files_name_t files_name = {NULL, NULL, 0};
     file_t *files = NULL;
     int nb_files_in_dir;
+    int ret = get_subfiles_name(&files_name, pathdir);
 
-    if (get_subfiles_name(&files_name, pathdir))
+    if (ret == EXIT_ERROR) {
         return EXIT_ERROR;
-    else if (get_files_data(&files_name, pathdir, &files))
+    } else if (ret == EXIT_ERROR2)
+        config->exit_status = EXIT_ERROR;
+    if (get_files_data(&files_name, pathdir, &files))
         return EXIT_ERROR;
     nb_files_in_dir = files_name.size;
     sort_files(files, nb_files_in_dir, config);

@@ -13,8 +13,10 @@ int get_subfiles_name(files_name_t *names, const char *pathdir)
     struct dirent *dir_file;
 
     if (!dir) {
-        my_putstr_error("ERROR: open dir\n");
-        return EXIT_SUCCESS;
+        my_putstr_error("ls: cannot access '");
+        my_putstr_error(pathdir);
+        my_putstr_error("': Permission denied\n");
+        return EXIT_ERROR2;
     }
     while ((dir_file = readdir(dir))) {
         if (!is_hidden_file(dir_file->d_name)) {

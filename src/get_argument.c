@@ -53,6 +53,7 @@ static void init_config(config_t *config)
     config->list_mode = 0;
     config->recusif_mode = 0;
     config->directory_mode = 0;
+    config->exit_status = EXIT_SUCCESS;
     config->sort_reverse_mode = 0;
     config->sort_mod_time_mode = 0;
     config->path_list.next = NULL;

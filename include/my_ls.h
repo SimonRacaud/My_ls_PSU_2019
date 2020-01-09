@@ -50,6 +50,7 @@ typedef struct config {
     char recusif_mode;
     files_name_t path_list;
     int size_path_list;
+    int exit_status;
 } config_t;
 
 typedef struct file {
@@ -86,6 +87,7 @@ int starting_browse(config_t *config);
 int browse_folder(config_t *config, const char *pathdir);
 int get_subfiles_name(files_name_t *names, const char *pathdir);
 int get_files_data(files_name_t *names, const char *path, file_t **files);
+int remove_nonexistant_files(files_name_t *names);
 
 int sort_files(file_t *files, int size, config_t *config);
 void quick_sort_files(file_t *files, int idx_begin, int idx_end);
