@@ -28,6 +28,7 @@ static void fill_file_data(file_t *file, stat_t *filestat)
     file->gid = filestat->st_gid;
     file->size = filestat->st_size;
     file->last_mod = filestat->st_mtime;
+    file->nb_block_alloc = filestat->st_blocks;
     file->minor = DEVICE_MINOR(filestat->st_rdev);
     file->major = DEVICE_MAJOR(filestat->st_rdev);
     file->owner_user = my_strdup(getpwuid(file->uid)->pw_name);
@@ -42,7 +43,7 @@ static int get_data(file_t *file, char *filename, const char *dir_path)
 {
     stat_t filestat;
 
-    if (!(file->path = merge_str(dir_path, filename))) {
+    if (!(file->path = merge_path_filename(dir_path, filename))) {
         perror("Error: merge path and filename.\n");
         return EXIT_ERROR;
     } else if (lstat(file->path, &filestat) == -1) {

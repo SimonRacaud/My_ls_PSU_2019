@@ -22,13 +22,23 @@ static void display_line(const file_t *file)
     my_putchar('\n');
 }
 
+static int get_sum_nb_block(file_t *files, int size)
+{
+    int blocks = 0;
+
+    for (int i = 0; i < size; i++) {
+        blocks += files[i].nb_block_alloc;
+    }
+    return (blocks / 2);
+}
+
 static void list_display(file_t *files, int size, config_t *config)
 {
     get_max_owner_len(files, size);
     get_link_max_size(files, size);
     get_size_max_size(files, size);
     if (!config->directory_mode)
-        my_printf("total %d\n", size);
+        my_printf("total %d\n", get_sum_nb_block(files, size));
     for (int i = 0; i < size; i++) {
         display_line(&files[i]);
     }
@@ -42,8 +52,18 @@ static void standard_display(file_t *files, int size)
     }
 }
 
-int display_files_data(file_t *files, int size, config_t *config)
+int display_files_data(file_t *files, int size, config_t *config,
+const char *pathdir)
 {
+    static int is_first = 1;
+
+    if (config->recusif_mode && !config->directory_mode) {
+        if (!is_first)
+            my_putchar('\n');
+        else
+            is_first = 0;
+        my_printf("%s:\n", pathdir);
+    }
     if (config->list_mode) {
         list_display(files, size, config);
     } else {

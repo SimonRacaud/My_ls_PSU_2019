@@ -59,6 +59,7 @@ typedef struct file {
     nlink_t link;
     int link_max_size;
     ino_t inode;
+    blkcnt_t nb_block_alloc;
     uid_t uid;
     gid_t gid;
     char *owner_user;
@@ -66,8 +67,8 @@ typedef struct file {
     char *owner_group;
     int max_len_owner_group;
     off_t size;
-    int size_max_len;
     time_t last_mod;
+    int size_max_len;
     unsigned int minor;
     unsigned int major;
 } file_t;
@@ -88,7 +89,8 @@ int get_files_data(files_name_t *names, const char *path, file_t **files,
 int sort_files(file_t *files, int size, config_t *config);
 void quick_sort_files(file_t *files, int idx_begin, int idx_end);
 
-int display_files_data(file_t *files, int size, config_t *config);
+int display_files_data(file_t *files, int size, config_t *config,
+const char *pathdir);
 void display_type_and_right(const file_t *file);
 void display_owner(const file_t *file);
 void display_size(const file_t *file);
@@ -110,7 +112,7 @@ int search_char_in_str(const char *str, char c);
 int is_hidden_file(char *file_name);
 char *get_filename(char *path);
 char get_filetype_char(mode_t mode);
-char *merge_str(const char *stra, const char *strb);
+char *merge_path_filename(const char *stra, const char *strb);
 char *my_strdup(char const *src);
 int my_nbrlen(int nbr);
 int my_strcmp_nocase(char const *s1, char const *s2);

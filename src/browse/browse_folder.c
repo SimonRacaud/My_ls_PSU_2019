@@ -28,7 +28,7 @@ int browse_folder(config_t *config, const char *pathdir)
         return EXIT_ERROR;
     nb_files_in_dir = files_name.size;
     sort_files(files, nb_files_in_dir, config);
-    display_files_data(files, nb_files_in_dir, config);
+    display_files_data(files, nb_files_in_dir, config, pathdir);
     filelist_destroy(&files_name, 1);
     if (config->recusif_mode) {
         if (recursive_browse(files, nb_files_in_dir, config))
