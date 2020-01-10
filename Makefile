@@ -13,7 +13,7 @@ SRC	=	$(DSRC)main.c								\
 		$(DSRC)get_argument.c						\
 		$(DSRC)destroy_struct.c						\
 		$(DSRC)tools.c								\
-		$(DSRC)tools_path.c								\
+		$(DSRC)tools_path.c							\
 		$(DSRC)my_strcmp_nocase.c					\
 		$(DSRC)browse/starting_browse.c				\
 		$(DSRC)browse/remove_nonexistant_files.c	\
@@ -41,7 +41,7 @@ CFLAGS	+= -Wall -Wextra -I./include
 all:	$(NAME)
 
 $(NAME):	LIB $(OBJ)
-	gcc -o $(NAME) $(OBJ) -L./lib -lmy
+	gcc -o $(NAME) $(OBJ) -L./lib/my -lmy
 
 LIB:
 	make -C ./lib/my
