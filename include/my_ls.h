@@ -76,8 +76,8 @@ typedef struct file {
     unsigned int major;
 } file_t;
 
-void debug_display_config(config_t *config); // DEBUG
-void debug_display_file(file_t *filedata); // DEBUG
+void debug_display_config(config_t *config);
+void debug_display_file(file_t *filedata);
 
 int my_ls(int argc, char **argv);
 
